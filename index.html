@@ -3,13 +3,27 @@ RAM="10G"
 
 apt update
 echo -e "openbox &\n exec ~/portablemc_env/bin/portablemc start forge:1.20.1 -l local --username \"$NOME\" --jvm-args \"-Xmx$RAM -Xms$RAM\"" >> .xinitrc
-apt install -y xserver-xorg-core xinit openbox openjdk-25-jre python3 python3-pip python3-venv libxxf86vm1 libxtst6 libxrender1 libasound2 firmware-amd-graphics libgl1-mesa-dri xserver-xorg-video-amdgpu
+
+apt install -y xserver-xorg-core xinit openbox openjdk-25-jre python3 python3-pip python3-venv libxxf86vm1 libxtst6 libxrender1 libasound2 firmware-amd-graphics libgl1-mesa-dri xserver-xorg-video-amdgpu unzip
+
 echo -e "allowed_users=anybody\n needs_root_rights=yes" >> /etc/X11/Xwrapper.config
+
 usermod -a -G video,input $USER
+
 python3 -m venv ~/portablemc_env
+
 ~/portablemc_env/bin/pip install portablemc
+
 chmod +x ~/.xinitrc
+
 mkdir ~/.minecraft/mods
 mkdir ~/.minecraft/mods
 mkdir ~/.minecraft/config
-nmcli
+
+wget https://github.com/Giuchri10/install.github.io/archive/refs/heads/files.zip -O /tmp/files.zip
+
+unzip /tmp/files.zip -d .
+cd install.github.io-files
+mv * .minecraft/
+cd ..
+rm -r install.github.io-files /tmp/files.zip
